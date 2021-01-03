@@ -1,14 +1,14 @@
 <template>
-  <HelloWorld msg="Welcome to my game: Dobble!"/>
+  <Game msg="Welcome to my game: Dobble!"/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Game from './components/Game.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Game
   }
 }
 </script>
@@ -22,4 +22,11 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+ul, li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
 </style>

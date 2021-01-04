@@ -7,8 +7,6 @@
   </div>
 </template>
 
-
-
 <script>
 import Card from "@/components/Card";
 
@@ -28,6 +26,8 @@ export default {
         test: "test", 
         animals: ["duck", "ape", "goose", "rat", "dog", "dragon", "firefly", "mouse", "raccoon", "cat", "elephant", "giraffe", "lion", "pig", "boar"],
         cardDecks: [],
+        amountOfCards: 4,
+        amountOfDecks: 2
     };
   },
   /* eslint-disable */
@@ -36,17 +36,16 @@ export default {
       let fullDeck = []
       let used = []
 
-      for(let i = 0; i < 2; i++) {
+      for(let i = 0; i < this.amountOfDecks; i++) {
         const deck = []
-        const randomPrevAnimal = Math.abs(Math.ceil(Math.random() * 3))
         
-        if(i === 1) {
+        if(i > 0) {
+          const randomPrevAnimal = Math.abs(Math.ceil(Math.random() * this.amountOfCards - 1))
           deck = [...deck, fullDeck[i - 1][randomPrevAnimal]]
         }
 
-        while(deck.length !== 4) {
+        while(deck.length !== this.amountOfCards) {
           const randomAnimal = Math.abs(Math.ceil(Math.random() * this.animals.length - 1))
-
 
           if(!deck.includes(this.animals[randomAnimal]) && !used.includes(randomAnimal)) {
             used = [...used, randomAnimal];

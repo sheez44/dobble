@@ -2,8 +2,8 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
 
-    <Card v-for="deck in cardDecks" :animals="deck" :key="deck" />
-
+    <Card v-for="(deck, index) in createCards" :animals="deck" :key="index" />
+    
   </div>
 </template>
 
@@ -18,19 +18,10 @@ export default {
     msg: String
   },
   mounted() {
-    this.createUniqueCard(this.animals)
+    
   },
   components: {
     Card,
-  },
-  computed: {
-    randomArray(a) {
-      for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-          }
-      return a;
-    }
   },
   data: function() {
     return {
@@ -39,33 +30,36 @@ export default {
         cardDecks: [],
     };
   },
-  methods: {
-    createUniqueCard(data, cards, decks) {
-      const amountOfCards = cards || 4
-      const amountOfDecks = decks || 2
+  /* eslint-disable */
+  computed: {
+    createCards() {
+      let fullDeck = []
+      let used = []
 
-      for(let i = 0; i < amountOfDecks; i++) {
-          let card = []
-          
-          if(this.cardDecks.length > 0) {
-            const ranNum = Math.ceil(Math.random() * amountOfCards - 1)
-            card.push(this.cardDecks[this.cardDecks.length - 1][ranNum])
-          }
-
-          while(card.length !== amountOfCards) {
-          const ranNum = Math.ceil(Math.random() * data.length - 1)
-
-          if(card.length === 0) {
-              card.push(data[ranNum])
-          } else if(!card.includes(data[ranNum])) {
-              card.push(data[ranNum])
-          } 
+      for(let i = 0; i < 2; i++) {
+        const deck = []
+        const randomPrevAnimal = Math.abs(Math.ceil(Math.random() * 3))
+        
+        if(i === 1) {
+          deck = [...deck, fullDeck[i - 1][randomPrevAnimal]]
         }
 
-        this.cardDecks.push(card)
-      }    
-    },
-  },
+        while(deck.length !== 4) {
+          const randomAnimal = Math.abs(Math.ceil(Math.random() * this.animals.length - 1))
+
+
+          if(!deck.includes(this.animals[randomAnimal]) && !used.includes(randomAnimal)) {
+            used = [...used, randomAnimal];
+            deck = [...deck, this.animals[randomAnimal]]
+          }
+        }
+
+        fullDeck = [...fullDeck, deck]
+      }
+
+      return fullDeck
+    }
+  }
 }
 </script>
 

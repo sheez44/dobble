@@ -1,5 +1,7 @@
 <template>
-  <Game msg="Welcome to my game: Dobble!"/>
+  <div class="page-wrapper">
+    <Game msg="Welcome to my game: Dobble!"/>
+  </div>
 </template>
 
 <script>
@@ -23,10 +25,21 @@ export default {
   margin-top: 60px;
 }
 
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
 ul, li {
   list-style-type: none;
   padding: 0;
   margin: 0;
+}
+
+.page-wrapper {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 </style>

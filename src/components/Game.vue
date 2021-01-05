@@ -2,13 +2,13 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
 
-    <Card v-for="(deck, index) in createCards" :animals="deck" :key="index" />
-    
+    <Card v-for="(deck, index) in createCards" :cards="deck" :key="index" />
   </div>
 </template>
 
 <script>
 import Card from "@/components/Card";
+import { cards } from "@/cards"
 
 export default {
   name: 'Game',
@@ -24,7 +24,7 @@ export default {
   data: function() {
     return {
         test: "test", 
-        animals: ["duck", "ape", "goose", "rat", "dog", "dragon", "firefly", "mouse", "raccoon", "cat", "elephant", "giraffe", "lion", "pig", "boar"],
+        cards,
         cardDecks: [],
         amountOfCards: 4,
         amountOfDecks: 2
@@ -40,16 +40,16 @@ export default {
         const deck = []
         
         if(i > 0) {
-          const randomPrevAnimal = Math.abs(Math.ceil(Math.random() * this.amountOfCards - 1))
-          deck = [...deck, fullDeck[i - 1][randomPrevAnimal]]
+          const randomPrevCard = Math.abs(Math.ceil(Math.random() * this.amountOfCards - 1))
+          deck = [...deck, fullDeck[i - 1][randomPrevCard]]
         }
 
         while(deck.length !== this.amountOfCards) {
-          const randomAnimal = Math.abs(Math.ceil(Math.random() * this.animals.length - 1))
+          const randomCard = Math.abs(Math.ceil(Math.random() * this.cards.length - 1))
 
-          if(!deck.includes(this.animals[randomAnimal]) && !used.includes(randomAnimal)) {
-            used = [...used, randomAnimal];
-            deck = [...deck, this.animals[randomAnimal]]
+          if(!deck.includes(this.cards[randomCard].name) && !used.includes(randomCard)) {
+            used = [...used, randomCard];
+            deck = [...deck, this.cards[randomCard].name]
           }
         }
 

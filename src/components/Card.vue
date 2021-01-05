@@ -1,6 +1,6 @@
 <template>
     <ul>
-      <li v-for="animal in animals" :key="animal">{{animal}}</li>
+      <li v-for="card in cards" :key="card.id">{{card}}</li>
     </ul>
 </template>
 
@@ -8,7 +8,7 @@
 export default {
   name: 'Card',
   props: {
-    animals: Object
+    cards: Object
   }
 }
 </script>

@@ -2,7 +2,11 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
 
-    <Card v-for="(deck, index) in createCards" :cards="deck" :key="index" />
+    <div class="card-wrapper">
+      <Card v-for="(deck, index) in createCards" :cards="deck" :key="index" />
+    </div>
+
+
   </div>
 </template>
 
@@ -26,7 +30,7 @@ export default {
         test: "test", 
         cards,
         cardDecks: [],
-        amountOfCards: 4,
+        amountOfCards: 8,
         amountOfDecks: 2
     };
   },
@@ -49,7 +53,7 @@ export default {
 
           if(!deck.includes(this.cards[randomCard].name) && !used.includes(randomCard)) {
             used = [...used, randomCard];
-            deck = [...deck, this.cards[randomCard].name]
+            deck = [...deck, this.cards[randomCard]]
           }
         }
 
@@ -64,7 +68,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+h1 {
+  margin: 0 0 2rem;
+}
+
+.card-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.card-wrapper ul:not(:last-of-type) {
+  margin-right: 5rem;
 }
 </style>

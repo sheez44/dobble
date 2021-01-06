@@ -2,11 +2,11 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
 
+    <button @click="startGame">click to start game</button>
+
     <div class="card-wrapper">
-      <Card v-for="(deck, index) in createCards" :cards="deck" :key="index" />
+      <Card v-for="(deck, index) in cardDecks" :cards="deck" :key="index" />
     </div>
-
-
   </div>
 </template>
 
@@ -34,14 +34,16 @@ export default {
         amountOfDecks: 2
     };
   },
-  /* eslint-disable */
-  computed: {
-    createCards() {
+  methods: {
+    startGame() {
+      this.shuffle()
+    },
+    shuffle() {
       let fullDeck = []
       let used = []
 
       for(let i = 0; i < this.amountOfDecks; i++) {
-        const deck = []
+        let deck = []
         
         if(i > 0) {
           const randomPrevCard = Math.abs(Math.ceil(Math.random() * this.amountOfCards - 1))
@@ -60,7 +62,7 @@ export default {
         fullDeck = [...fullDeck, deck]
       }
 
-      return fullDeck
+      this.cardDecks = fullDeck
     }
   }
 }

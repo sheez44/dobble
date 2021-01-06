@@ -1,7 +1,7 @@
 <template>
     <ul>
       <li v-for="card in cards" :key="card.id">
-        <IconBase :iconName="card.name" :path="card.svg" />
+        <iconBase :iconName="card.name" :path="card.svg"></iconBase>
       </li>
     </ul>
 </template>

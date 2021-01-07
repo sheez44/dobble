@@ -1,7 +1,8 @@
 <template>
     <ul>
       <li v-for="card in cards" :key="card.id">
-        <iconBase :iconName="card.name" :path="card.svg"></iconBase>
+        <button v-if="cardIndex === 0" disabled><iconBase :iconName="card.name" :path="card.svg"></iconBase></button>
+        <button v-else @click="checkCard(card)"><iconBase :iconName="card.name" :path="card.svg"></iconBase></button>
       </li>
     </ul>
 </template>
@@ -15,7 +16,16 @@ export default {
     IconBase,
   },
   props: {
-    cards: Object
+    cards: Object,
+    cardIndex: Number,
+    cardToFind: Object
+  },
+  methods: {
+    checkCard(card) {
+      if(card.name === this.cardToFind.name) {
+        console.log("its a match")
+      }
+    }
   }
 }
 </script>
@@ -26,11 +36,25 @@ h3 {
   margin: 40px 0 0;
 }
 
-li {
-  cursor: pointer;
+li button:not(:disabled):hover {
+  transform: scale(1.3);
+  cursor: pointer
 }
 
-li:hover {
-  transform: scale(1.3);
+li button,
+li button:focus
+li button:active {
+  background-color: transparent;
+  appearance: none;
+  border: none;
+  outline: none;
+}
+
+li button:disabled {
+  background-color: none;
+}
+
+li button:disabled:hover {
+  transform: none;
 }
 </style>

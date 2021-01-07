@@ -3,35 +3,34 @@
     <h1>{{ msg }}</h1>
 
     <button @click="startGame">click to start game</button>
-
     <div class="card-wrapper">
-      <Card v-for="(deck, index) in cardDecks" :cards="deck" :key="index" />
+      <Card v-for="(deck, index) in cardDecks" :cards="deck" :cardToFind="cardToFind" :cardIndex="index" :key="index" />
     </div>
   </div>
 </template>
 
 <script>
 import Card from "@/components/Card";
-import { cards } from "@/cards"
+import { cards } from "@/cards";
 
 export default {
   name: 'Game',
   props: {
     msg: String
   },
-  mounted() {
-    
+  created() {
+    this.shuffle()
   },
   components: {
     Card,
   },
-  data: function() {
+  data() {
     return {
-        test: "test", 
         cards,
         cardDecks: [],
         amountOfCards: 8,
-        amountOfDecks: 2
+        amountOfDecks: 2,
+        cardToFind: "ds",
     };
   },
   methods: {
@@ -46,8 +45,13 @@ export default {
         let deck = []
         
         if(i > 0) {
-          const randomPrevCard = Math.abs(Math.ceil(Math.random() * this.amountOfCards - 1))
-          deck = [...deck, fullDeck[i - 1][randomPrevCard]]
+          // pick a random card from the last deck; this will be the card the user needs to find
+          const randomPrevCardIndex = Math.abs(Math.ceil(Math.random() * this.amountOfCards - 1))
+          const randomPrevCard = fullDeck[i - 1][randomPrevCardIndex]
+          // pre-fill the new deck with the random card from the previous deck
+          deck = [...deck, randomPrevCard]
+          // add the card to find card to the global state
+          this.cardToFind = randomPrevCard
         }
 
         while(deck.length !== this.amountOfCards) {

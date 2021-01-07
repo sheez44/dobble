@@ -23,7 +23,7 @@ export default {
     },
     computed: {
     calcSize() {
-      const ranNum = Math.ceil(Math.random() * 7)
+      const ranNum = Math.ceil(Math.random() * 7) // Dev note: 7 random sizes or 7 random "fixed" sizes from array?
 
       return 5 + (ranNum * 10)
     },
@@ -33,6 +33,11 @@ export default {
 
       return colors[ranNum]
     }
+  },
+  // TODO fix reactive object; use it to set the correct viewbox for each icon
+  inject: ["deck"],
+  created() {
+    console.log(this.deck)
   }
 }
 </script>

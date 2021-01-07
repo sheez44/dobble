@@ -16,6 +16,7 @@
 <script>
 import Card from "@/components/Card";
 import { cards } from "@/cards";
+import { computed } from "vue"
 
 export default {
   name: 'Game',
@@ -34,7 +35,7 @@ export default {
         cardDecks: [],
         amountOfCards: 8,
         amountOfDecks: 2,
-        cardToFind: "ds",
+        cardToFind: "",
     };
   },
   methods: {
@@ -50,7 +51,7 @@ export default {
         
         if(i > 0) {
           // pick a random card from the last deck; this will be the card the user needs to find
-          const randomPrevCardIndex = Math.abs(Math.ceil(Math.random() * this.amountOfCards - 1))
+          const randomPrevCardIndex = Math.floor(Math.random() * this.amountOfCards)
           const randomPrevCard = fullDeck[i - 1][randomPrevCardIndex]
           // pre-fill the new deck with the random card from the previous deck
           deck = [...deck, randomPrevCard]
@@ -59,11 +60,11 @@ export default {
         }
 
         while(deck.length !== this.amountOfCards) {
-          const randomCard = Math.abs(Math.ceil(Math.random() * this.cards.length - 1))
+          const randomCard = Math.floor(Math.random() * this.cards.length) // Dev note: export randomIndexNum (floor) && randomNumber (ceil) to own seperate helper file
 
           if(!deck.includes(this.cards[randomCard].name) && !used.includes(randomCard)) {
             used = [...used, randomCard];
-            deck = [...deck, this.cards[randomCard]]
+            deck = [...deck, this.cards[randomCard]] // Bug: the tofindcard is always index 0 --> array needs to be shuffled
           }
         }
 
@@ -72,12 +73,18 @@ export default {
 
       this.cardDecks = fullDeck
     }
+  },
+  provide() {
+    return {
+      // TODO fix reactive object
+      deck: computed(() =>this.cardDecks)
+    }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
 h1 {
   margin: 0 0 2rem;
 }
@@ -85,9 +92,10 @@ h1 {
 .card-wrapper {
   display: flex;
   justify-content: center;
+
+  ul:not(:last-of-type) {
+  margin-right: 5rem;
+  }
 }
 
-.card-wrapper ul:not(:last-of-type) {
-  margin-right: 5rem;
-}
 </style>

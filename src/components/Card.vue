@@ -30,31 +30,44 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
+<style scoped lang="scss">
+ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: // Dev note: is it possible to randomize the grid area? (or at least the placement of the "."")
+    "icon-1 icon-2 icon-3"
+    "icon-4 icon-7 icon-5"
+    "icon-6 . icon-8";
 }
 
-li button:not(:disabled):hover {
-  transform: scale(1.3);
-  cursor: pointer
+@for $i from 1 through 8 {
+  li:nth-child(#{$i}) {
+    grid-area: icon-#{$i}
+  }
 }
 
-li button,
-li button:focus
-li button:active {
-  background-color: transparent;
-  appearance: none;
-  border: none;
-  outline: none;
-}
+button {
+    background-color: transparent;
+    appearance: none;
+    border: none;
+    outline: none;
 
-li button:disabled {
-  background-color: none;
-}
+    &:not(:disabled):hover {
+      transform: scale(1.3);
+      cursor: pointer
+    }
+    &:focus
+    &:active {
+      background-color: transparent;
+      appearance: none;
+      border: none;
+      outline: none;
+    }
 
-li button:disabled:hover {
-  transform: none;
-}
+    &:disabled {
+      transform: none;
+    }
+  }
+
 </style>

@@ -4,7 +4,11 @@
 
     <button @click="startGame">click to start game</button>
     <div class="card-wrapper">
-      <Card v-for="(deck, index) in cardDecks" :cards="deck" :cardToFind="cardToFind" :cardIndex="index" :key="index" />
+      <Card v-for="(deck, index) in cardDecks"
+        :cards="deck" 
+        :cardToFind="cardToFind" 
+        :cardIndex="index" 
+        :key="index" />
     </div>
   </div>
 </template>

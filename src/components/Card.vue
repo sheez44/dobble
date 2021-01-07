@@ -26,7 +26,7 @@ export default {
         console.log("its a match")
       }
     }
-  }
+  },
 }
 </script>
 

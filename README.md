@@ -1,4 +1,5 @@
 # dobble
+My first try at Vue. Trying to build an existing card game called dobble
 
 ## Project setup
 ```
@@ -20,5 +21,3 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

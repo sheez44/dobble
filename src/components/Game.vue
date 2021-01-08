@@ -2,9 +2,11 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
 
+    <h3 v-if="testMode">{{ cardToFind.name }}</h3>
+
     <button @click="startGame">click to start game</button>
     <div class="card-wrapper">
-      <Card v-for="(deck, index) in cardDecks"
+      <Card v-for="(deck, index) in cardDeck"
         :cards="deck" 
         :cardToFind="cardToFind" 
         :cardIndex="index" 
@@ -24,7 +26,7 @@ export default {
     msg: String
   },
   created() {
-    this.shuffle()
+    this.createDeck()
   },
   components: {
     Card,
@@ -32,17 +34,18 @@ export default {
   data() {
     return {
         cards,
-        cardDecks: [],
+        cardDeck: [],
         amountOfCards: 8,
         amountOfDecks: 2,
         cardToFind: "",
+        testMode: true,
     };
   },
   methods: {
     startGame() {
-      this.shuffle()
+      this.createDeck()
     },
-    shuffle() {
+    createDeck() {
       let fullDeck = []
       let used = []
 
@@ -60,24 +63,39 @@ export default {
         }
 
         while(deck.length !== this.amountOfCards) {
-          const randomCard = Math.floor(Math.random() * this.cards.length) // Dev note: export randomIndexNum (floor) && randomNumber (ceil) to own seperate helper file
+          const randomCard = Math.floor(Math.random() * this.cards.length)
 
           if(!deck.includes(this.cards[randomCard].name) && !used.includes(randomCard)) {
             used = [...used, randomCard];
-            deck = [...deck, this.cards[randomCard]] // Bug: the tofindcard is always index 0 --> array needs to be shuffled
+            deck = [...deck, this.cards[randomCard]]
           }
         }
 
-        fullDeck = [...fullDeck, deck]
+        // since cardToFind is always at index 0, we need to shuffle it first    
+        fullDeck = [...fullDeck, this.shuffleArray(deck)]
       }
 
-      this.cardDecks = fullDeck
-    }
+      this.cardDeck = fullDeck
+    },
+    shuffleArray(array) {
+      let curId = array.length;
+      // There remain elements to shuffle
+      while (0 !== curId) {
+          // Pick a remaining element
+          let randId = Math.floor(Math.random() * curId);
+          curId -= 1;
+          // Swap it with the current element.
+          let tmp = array[curId];
+          array[curId] = array[randId];
+          array[randId] = tmp;
+      }
+      return array;
+    },
   },
   provide() {
     return {
       // TODO fix reactive object
-      deck: computed(() =>this.cardDecks)
+      deck: computed(() =>this.cardDeck)
     }
   }
 }
@@ -94,7 +112,7 @@ h1 {
   justify-content: center;
 
   ul:not(:last-of-type) {
-  margin-right: 5rem;
+    margin-right: 5rem;
   }
 }
 

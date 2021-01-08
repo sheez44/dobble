@@ -4,8 +4,9 @@
 
     <h3 v-if="testMode">{{ cardToFind.name }}</h3>
 
-    <button @click="startGame">click to start game</button>
-    <div class="card-wrapper">
+    
+    <score-board @start-game="startGame()"></score-board>
+    <div class="card-wrapper" v-if="gameState">
       <Card v-for="(deck, index) in cardDeck"
         :cards="deck" 
         :cardToFind="cardToFind" 
@@ -19,6 +20,7 @@
 import Card from "@/components/Card";
 import { cards } from "@/cards";
 import { computed } from "vue"
+import ScoreBoard from './ScoreBoard.vue';
 
 export default {
   name: 'Game',
@@ -26,10 +28,11 @@ export default {
     msg: String
   },
   created() {
-    this.createDeck()
+
   },
   components: {
     Card,
+    ScoreBoard,
   },
   data() {
     return {
@@ -39,11 +42,13 @@ export default {
         amountOfDecks: 2,
         cardToFind: "",
         testMode: true,
+        gameState: false,
     };
   },
   methods: {
     startGame() {
       this.createDeck()
+      this.gameState = true
     },
     createDeck() {
       let fullDeck = []
@@ -114,6 +119,10 @@ h1 {
   ul:not(:last-of-type) {
     margin-right: 5rem;
   }
+}
+
+button {
+  margin-bottom: 1.5rem;
 }
 
 </style>

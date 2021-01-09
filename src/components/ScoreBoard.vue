@@ -1,9 +1,11 @@
 <template>
     <div class="scoreboard-wrapper">
-        <button @click="startGame">click to start game</button>
+        <button @click="startGame" scores="score">click to start game</button>
         <div class="timer">
             {{timer}}
         </div>
+
+        <p>Your current score: {{ this.scores.scores }}</p>
     </div>
 </template>
 
@@ -33,6 +35,9 @@ export default {
             }             
             }, 1000)
         }
+    },
+    props: {
+        scores: Object
     }
 }
 </script>  

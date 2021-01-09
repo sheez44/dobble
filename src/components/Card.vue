@@ -12,6 +12,11 @@ import IconBase from "@/components/IconBase";
 
 export default {
   name: 'Card',
+  data() {
+    return {
+      score: 0
+    }
+  },
   components: {
     IconBase,
   },
@@ -20,10 +25,13 @@ export default {
     cardIndex: Number,
     cardToFind: Object
   },
+  emits: ["handle-scores"],
   methods: {
     checkCard(card) {
+       
       if(card.name === this.cardToFind.name) {
-        console.log("its a match")
+        this.score++ 
+        this.$emit("handle-scores", {scores: this.score})
       }
     }
   },

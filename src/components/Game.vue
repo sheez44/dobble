@@ -4,14 +4,15 @@
 
     <h3 v-if="testMode">{{ cardToFind.name }}</h3>
 
+    <score-board @start-game="startGame" :scores="scores"></score-board>
     
-    <score-board @start-game="startGame()"></score-board>
     <div class="card-wrapper" v-if="gameState">
-      <Card v-for="(deck, index) in cardDeck"
+      <card v-for="(deck, index) in cardDeck"
         :cards="deck" 
         :cardToFind="cardToFind" 
         :cardIndex="index" 
-        :key="index" />
+        :key="index" 
+        @handle-scores="handleScores"></card>
     </div>
   </div>
 </template>
@@ -43,6 +44,7 @@ export default {
         cardToFind: "",
         testMode: true,
         gameState: false,
+        scores: {scores: 0},
     };
   },
   methods: {
@@ -81,6 +83,9 @@ export default {
       }
 
       this.cardDeck = fullDeck
+    },
+    handleScores(scores) {
+      this.scores = scores
     },
     shuffleArray(array) {
       let curId = array.length;
